@@ -18,6 +18,7 @@ pnpm-debug.log*
 lerna-debug.log*
 
 package-lock.json
+/package-lock.json
 
 node_modules
 dist
