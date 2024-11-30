@@ -1,0 +1,10 @@
+{
+  "carouselImages": [
+    "https://via.placeholder.com/800x400",
+    "https://via.placeholder.com/800x400",
+    "https://via.placeholder.com/800x400"
+  ],
+  "welcomeMessage": "Добро пожаловать!",
+  "description": "Лучшее место для вашей тренировки и отдыха. Здесь вы найдёте современное оборудование, профессиональных тренеров и уютную атмосферу.",
+  "participants": "12/20"
+}
