@@ -1,0 +1,54 @@
+.main-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  min-height: 90vh;
+  box-sizing: border-box;
+}
+
+.carousel-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.carousel-image {
+  width: 800px;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.info-container {
+  text-align: center;
+  max-width: 800px;
+}
+
+.title {
+  margin-bottom: 20px;
+}
+
+.description {
+  margin-bottom: 10px;
+}
+
+.participants {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.date-picker-space {
+  width: 100%;
+}
+
+.date-picker {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.register-button {
+  margin-top: 20px;
+}
