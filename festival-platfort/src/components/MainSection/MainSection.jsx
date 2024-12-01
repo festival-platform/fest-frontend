@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Carousel, Typography, Button, DatePicker, Space } from "antd";
+import { Carousel, Typography, Button } from "antd";
+import DateSelector from "./components/DateSelector/DateSelector";
 import "./MainSection.css";
 
 const { Title, Paragraph } = Typography;
@@ -14,7 +15,7 @@ const MainSection = () => {
       .then((json) => setData(json));
   }, []);
 
-  const handleDateChange = (date, dateString) => {
+  const handleDateChange = (dateString) => {
     setSelectedDate(dateString);
   };
 
@@ -40,16 +41,7 @@ const MainSection = () => {
           {data.welcomeMessage}
         </Title>
         <Paragraph className="description">{data.description}</Paragraph>
-        <Paragraph className="participants">
-          Количество участников: {data.participants}
-        </Paragraph>
-        <Space direction="vertical" size={12} className="date-picker-space">
-          <DatePicker
-            onChange={handleDateChange}
-            placeholder="Выберите дату"
-            className="date-picker"
-          />
-        </Space>
+        <DateSelector onDateSelect={handleDateChange} />{" "}
         {selectedDate && (
           <Button type="primary" size="large" className="register-button">
             Записаться на {selectedDate}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu } from "antd";
+import { Button } from "antd";
 import "./Header.css";
 
 const Header = () => {
@@ -11,12 +11,13 @@ const Header = () => {
   return (
     <div className="header">
       <div className="logo">ЛОГО</div>
-      <Menu
-        theme="dark"
-        mode="horizontal"
-        defaultSelectedKeys={["1"]}
-        items={menuItems}
-      />
+      <div className="menu-buttons">
+        {menuItems.map((item) => (
+          <Button key={item.key} type="primary" className="menu-button">
+            {item.label}
+          </Button>
+        ))}
+      </div>
     </div>
   );
 };
