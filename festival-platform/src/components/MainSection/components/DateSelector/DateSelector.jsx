@@ -33,7 +33,7 @@ const DateSelector = ({ onDateSelect }) => {
   const dropdownContent = (
     <div className="participants-dropdown">
       <div className="dropdown-item">
-        <div className="label">Взрослые</div>
+        <div className="label">People</div>
         <div className="controls">
           <Button
             onClick={() => setParticipants(participants - 1)}
@@ -49,14 +49,14 @@ const DateSelector = ({ onDateSelect }) => {
           />
           <Button onClick={() => setParticipants(participants + 1)}>+</Button>
         </div>
-        <div className="age-info">(Возраст: 99 и младше)</div>
+        <div className="age-info">(Age: 100 and younger)</div>
       </div>
     </div>
   );
 
   return (
     <div className="date-selector-container">
-      <h3>Выберите участников и дату</h3>
+      <h3>Select participants and date</h3>
       <div className="controls">
         <div className="participants">
           <Dropdown
@@ -66,20 +66,20 @@ const DateSelector = ({ onDateSelect }) => {
             onOpenChange={setIsDropdownOpen}
           >
             <Button className="participants-selector">
-              <UserOutlined /> Взрослые x {participants}
+              <UserOutlined /> People x {participants}
             </Button>
           </Dropdown>
         </div>
         <div className="date-picker-wrapper">
           <DatePicker
             onChange={handleDateChange}
-            placeholder="Выберите дату"
+            placeholder="Select date"
             className="date-picker"
             disabledDate={disabledDate}
           />
         </div>
         <Button type="primary" className="check-availability">
-          Проверить доступность
+          Check availability
         </Button>
       </div>
     </div>

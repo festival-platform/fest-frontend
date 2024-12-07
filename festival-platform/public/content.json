@@ -4,6 +4,9 @@
     "https://i.pinimg.com/736x/87/58/ff/8758ff288157552f7618adf96742932f.jpg",
     "https://i.pinimg.com/736x/71/7b/0e/717b0e940a8f036bd850ac91391cb256.jpg"
   ],
-  "welcomeMessage": "Добро пожаловать!",
-  "description": "Лучшее место для вашей тренировки и отдыха. Здесь вы найдёте современное оборудование, профессиональных тренеров и уютную атмосферу."
+  "welcomeMessage": "Cat Festival",
+  "description": "The best place for your training and relaxation. Here you will find modern equipment, professional trainers and a cozy atmosphere.",
+  "price": "500",
+  "duration": "6 hour",
+  "cancellationPolicy": "Бесплатная отмена"
 }

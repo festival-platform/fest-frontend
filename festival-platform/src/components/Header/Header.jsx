@@ -5,14 +5,14 @@ import "./Header.css";
 
 const Header = () => {
   const menuItems = [
-    { label: "Главная", key: "1", link: "/" },
-    { label: "О нас", key: "2", link: "/about" },
-    { label: "Контакты", key: "3", link: "/contacts" },
+    { label: "Main", key: "1", link: "/" },
+    { label: "About us", key: "2", link: "/about" },
+    { label: "Contacts", key: "3", link: "/contacts" },
   ];
 
   return (
     <div className="header">
-      <div className="logo">ЛОГО</div>
+      <div className="logo">LOGO</div>
       <div className="menu-buttons">
         {menuItems.map((item) => (
           <Link key={item.key} to={item.link}>

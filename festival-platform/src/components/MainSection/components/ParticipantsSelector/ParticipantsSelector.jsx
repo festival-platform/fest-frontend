@@ -23,7 +23,7 @@ const ParticipantsSelector = () => {
     <Menu className="participants-dropdown">
       <Menu.Item key="1">
         <div className="dropdown-item">
-          <div className="label">Взрослые</div>
+          <div className="label">People</div>
           <div className="controls">
             <Button onClick={handleDecrement} disabled={count <= 1}>
               -
@@ -36,7 +36,7 @@ const ParticipantsSelector = () => {
             />
             <Button onClick={handleIncrement}>+</Button>
           </div>
-          <div className="age-info">(Возраст: 99 и младше)</div>
+          <div className="age-info">(Age: 100 and younger)</div>
         </div>
       </Menu.Item>
     </Menu>
@@ -51,7 +51,7 @@ const ParticipantsSelector = () => {
       overlayClassName="participants-dropdown"
     >
       <Button className="participants-selector">
-        <UserOutlined /> Взрослые x {count}
+        <UserOutlined /> People x {count}
       </Button>
     </Dropdown>
   );
