@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Carousel, Typography, Button, Row, Col } from "antd";
+import { Carousel, Typography, Row, Col } from "antd";
 import {
   DollarCircleOutlined,
   ClockCircleOutlined,
@@ -11,7 +11,7 @@ import "./MainSection.css";
 const { Title, Paragraph } = Typography;
 
 const MainSection = () => {
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [setSelectedDate] = useState(null);
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -80,11 +80,11 @@ const MainSection = () => {
           </div>
         </div>
         <DateSelector onDateSelect={handleDateChange} />{" "}
-        {selectedDate && (
+        {/* {selectedDate && (
           <Button type="primary" size="large" className="register-button">
             Sign up for {selectedDate}
           </Button>
-        )}
+        )} */}
       </div>
     </div>
   );
