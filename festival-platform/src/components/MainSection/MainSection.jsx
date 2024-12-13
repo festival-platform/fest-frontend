@@ -7,12 +7,14 @@ import {
 } from "@ant-design/icons";
 import DateSelector from "./components/DateSelector/DateSelector";
 import "./MainSection.css";
+import { useTranslation } from "react-i18next";
 
 const { Title, Paragraph } = Typography;
 
 const MainSection = () => {
   const [setSelectedDate] = useState(null);
   const [data, setData] = useState(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetch("content.json")
@@ -47,7 +49,7 @@ const MainSection = () => {
         </Title>
         <Paragraph className="description">{data.description}</Paragraph>
         <div className="event-info-container">
-          <Title level={3}>About the event</Title>
+          <Title level={3}>{t("aboutTheEvent")}</Title>
           <div className="event-info">
             <Row gutter={16}>
               <Col span={8}>
@@ -55,7 +57,9 @@ const MainSection = () => {
                   <DollarCircleOutlined
                     style={{ fontSize: "24px", color: "#52c41a" }}
                   />
-                  <span className="price-text">Price: {data.price} €</span>
+                  <span className="price-text">
+                    {t("priceEvent")}: {data.price} €
+                  </span>
                 </div>
               </Col>
               <Col span={8}>
@@ -64,7 +68,7 @@ const MainSection = () => {
                     style={{ fontSize: "24px", color: "#fa8c16" }}
                   />
                   <span className="duration-text">
-                    Duration: {data.duration}
+                    {t("durationEvent")}: {data.duration}
                   </span>
                 </div>
               </Col>
@@ -73,7 +77,9 @@ const MainSection = () => {
                   <RedEnvelopeOutlined
                     style={{ fontSize: "24px", color: "#1890ff" }}
                   />
-                  <span className="cancellation-text">Free cancellation</span>
+                  <span className="cancellation-text">
+                    {t("cancellationText")}
+                  </span>
                 </div>
               </Col>
             </Row>

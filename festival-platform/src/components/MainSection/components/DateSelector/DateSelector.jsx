@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { DatePicker, Button, Dropdown, InputNumber } from "antd";
 import { fetchEventDates } from "../../../../api/eventsApi";
 import { UserOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 import "./DateSelector.css";
 
 const DateSelector = ({ onDateSelect }) => {
+  const { t } = useTranslation();
   const [enabledDates, setEnabledDates] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
   const [participants, setParticipants] = useState(1);
@@ -33,7 +35,7 @@ const DateSelector = ({ onDateSelect }) => {
   const dropdownContent = (
     <div className="participants-dropdown">
       <div className="dropdown-item">
-        <div className="label">People</div>
+        <div className="label">{t("people")}</div>
         <div className="controls">
           <Button
             onClick={() => setParticipants(participants - 1)}
@@ -49,14 +51,14 @@ const DateSelector = ({ onDateSelect }) => {
           />
           <Button onClick={() => setParticipants(participants + 1)}>+</Button>
         </div>
-        <div className="age-info">(Age: 100 and younger)</div>
+        <div className="age-info">{t("ageInfo")}</div>
       </div>
     </div>
   );
 
   return (
     <div className="date-selector-container">
-      <h3>Select participants and date</h3>
+      <h3>{t("selectParticipantsAndDate")}</h3>
       <div className="controls">
         <div className="participants">
           <Dropdown
@@ -66,20 +68,20 @@ const DateSelector = ({ onDateSelect }) => {
             onOpenChange={setIsDropdownOpen}
           >
             <Button className="participants-selector">
-              <UserOutlined /> People x {participants}
+              <UserOutlined /> {t("people")} x {participants}
             </Button>
           </Dropdown>
         </div>
         <div className="date-picker-wrapper">
           <DatePicker
             onChange={handleDateChange}
-            placeholder="Select date"
+            placeholder={t("selectDate")}
             className="date-picker"
             disabledDate={disabledDate}
           />
         </div>
         <Button type="primary" className="check-availability">
-          Check availability
+          {t("check_availability")}
         </Button>
       </div>
     </div>

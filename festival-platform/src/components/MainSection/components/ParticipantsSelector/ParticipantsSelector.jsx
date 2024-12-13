@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Dropdown, Button, InputNumber, Menu } from "antd";
 import { UserOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 import "./ParticipantsSelector.css";
 
 const ParticipantsSelector = () => {
   const [count, setCount] = useState(1);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { t } = useTranslation();
 
   const handleIncrement = () => {
     setCount((prev) => prev + 1);
@@ -23,10 +25,10 @@ const ParticipantsSelector = () => {
     <Menu className="participants-dropdown">
       <Menu.Item key="1">
         <div className="dropdown-item">
-          <div className="label">People</div>
+          <div className="label">{t("people")}</div>
           <div className="controls">
             <Button onClick={handleDecrement} disabled={count <= 1}>
-              -
+              {t("decrement")}
             </Button>
             <InputNumber
               min={1}
@@ -34,9 +36,9 @@ const ParticipantsSelector = () => {
               value={count}
               onChange={handleInputChange}
             />
-            <Button onClick={handleIncrement}>+</Button>
+            <Button onClick={handleIncrement}>{t("increment")}</Button>
           </div>
-          <div className="age-info">(Age: 100 and younger)</div>
+          <div className="age-info">{t("ageInfo")}</div>
         </div>
       </Menu.Item>
     </Menu>
@@ -51,7 +53,7 @@ const ParticipantsSelector = () => {
       overlayClassName="participants-dropdown"
     >
       <Button className="participants-selector">
-        <UserOutlined /> People x {count}
+        <UserOutlined /> {t("people")} x {count}
       </Button>
     </Dropdown>
   );
