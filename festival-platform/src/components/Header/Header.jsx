@@ -3,12 +3,15 @@ import { Link } from "react-router-dom";
 import { Button } from "antd";
 import "./Header.css";
 import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
+  const { t } = useTranslation();
+
   const menuItems = [
-    { label: "Main", key: "1", link: "/" },
-    { label: "About us", key: "2", link: "/about" },
-    { label: "Contacts", key: "3", link: "/contacts" },
+    { key: "1", labelKey: "menuMain", link: "/" },
+    { key: "2", labelKey: "menuAboutUs", link: "/about" },
+    { key: "3", labelKey: "menuContacts", link: "/contacts" },
   ];
 
   return (
@@ -18,7 +21,7 @@ const Header = () => {
         {menuItems.map((item) => (
           <Link key={item.key} to={item.link}>
             <Button type="primary" className="menu-button">
-              {item.label}
+              {t(item.labelKey)}
             </Button>
           </Link>
         ))}

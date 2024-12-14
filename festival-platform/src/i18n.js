@@ -19,7 +19,14 @@ i18n
           aboutTheEvent: "About the event",
           priceEvent: "Price",
           durationEvent: "Duration",
-          cancellationText: "Free cancellation",
+          rewiewText: "Write your review",
+          rewiewPlaceholder: "Write your review here...",
+          nameEvent: "Event Name", // заглушка
+          descriptionEvent: "Event Description", // заглушка
+          googleButton: "Login with Google",
+          menuMain: "Main",
+          menuAboutUs: "About us",
+          menuContacts: "Contacts",
         },
       },
       de: {
@@ -34,7 +41,14 @@ i18n
           aboutTheEvent: "Über die veranstaltung",
           priceEvent: "Preis",
           durationEvent: "Dauer",
-          cancellationText: "Kostenlose stornierung",
+          rewiewText: "Schreiben Sie Ihre Bewertung",
+          rewiewPlaceholder: "Schreiben Sie hier Ihre Bewertung...",
+          nameEvent: "Veranstaltungsname", // заглушка
+          descriptionEvent: "Veranstaltungsbeschreibung", // заглушка
+          googleButton: "Melden Sie sich mit Google an",
+          menuMain: "Hauptseite",
+          menuAboutUs: "Über uns",
+          menuContacts: "Kontakte",
         },
       },
     },
@@ -43,5 +57,11 @@ i18n
       escapeValue: false,
     },
   });
+
+export const updateTranslations = (lang, translations) => {
+  Object.entries(translations).forEach(([key, value]) => {
+    i18n.addResource(lang, "translation", key, value);
+  });
+};
 
 export default i18n;

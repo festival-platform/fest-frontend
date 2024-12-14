@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { DatePicker, Button, Dropdown, InputNumber } from "antd";
+import { DatePicker, Button, Dropdown, InputNumber, Menu } from "antd";
 import { fetchEventDates } from "../../../../api/eventsApi";
 import { UserOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
@@ -32,28 +32,34 @@ const DateSelector = ({ onDateSelect }) => {
     setParticipants(value);
   };
 
-  const dropdownContent = (
-    <div className="participants-dropdown">
-      <div className="dropdown-item">
-        <div className="label">{t("people")}</div>
-        <div className="controls">
-          <Button
-            onClick={() => setParticipants(participants - 1)}
-            disabled={participants <= 1}
-          >
-            -
-          </Button>
-          <InputNumber
-            min={1}
-            max={99}
-            value={participants}
-            onChange={handleParticipantsChange}
-          />
-          <Button onClick={() => setParticipants(participants + 1)}>+</Button>
+  const dropdownMenu = (
+    <Menu>
+      <Menu.Item key="1">
+        <div className="participants-dropdown">
+          <div className="dropdown-item">
+            <div className="label">{t("people")}</div>
+            <div className="controls">
+              <Button
+                onClick={() => setParticipants(participants - 1)}
+                disabled={participants <= 1}
+              >
+                -
+              </Button>
+              <InputNumber
+                min={1}
+                max={99}
+                value={participants}
+                onChange={handleParticipantsChange}
+              />
+              <Button onClick={() => setParticipants(participants + 1)}>
+                +
+              </Button>
+            </div>
+            <div className="age-info">{t("ageInfo")}</div>
+          </div>
         </div>
-        <div className="age-info">{t("ageInfo")}</div>
-      </div>
-    </div>
+      </Menu.Item>
+    </Menu>
   );
 
   return (
@@ -62,7 +68,7 @@ const DateSelector = ({ onDateSelect }) => {
       <div className="controls">
         <div className="participants">
           <Dropdown
-            overlay={dropdownContent}
+            menu={{ items: dropdownMenu }}
             trigger={["click"]}
             open={isDropdownOpen}
             onOpenChange={setIsDropdownOpen}
