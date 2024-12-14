@@ -3,7 +3,6 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import MainSection from "./components/MainSection/MainSection";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import LanguageSwitcher from "./components/MainSection/components/LanguageSwitcher/LanguageSwitcher";
 import "./App.css";
 import "./i18n";
 
@@ -15,7 +14,6 @@ const App = () => {
   return (
     <Router>
       <div className="app-container">
-        <LanguageSwitcher />
         <Header />
         <main className="app-content">
           <Routes>

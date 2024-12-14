@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "antd";
 import "./Header.css";
+import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
 
 const Header = () => {
   const menuItems = [
@@ -21,6 +22,7 @@ const Header = () => {
             </Button>
           </Link>
         ))}
+        <LanguageSwitcher />
       </div>
     </div>
   );
