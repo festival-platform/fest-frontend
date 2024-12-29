@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { DatePicker, Button, Dropdown, InputNumber, Menu } from "antd";
+import { DatePicker, Button, Dropdown, InputNumber, message } from "antd";
 import { fetchEventDates } from "../../../../api/eventsApi";
 import { UserOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
@@ -32,35 +32,14 @@ const DateSelector = ({ onDateSelect }) => {
     setParticipants(value);
   };
 
-  const dropdownMenu = (
-    <Menu>
-      <Menu.Item key="1">
-        <div className="participants-dropdown">
-          <div className="dropdown-item">
-            <div className="label">{t("people")}</div>
-            <div className="controls">
-              <Button
-                onClick={() => setParticipants(participants - 1)}
-                disabled={participants <= 1}
-              >
-                -
-              </Button>
-              <InputNumber
-                min={1}
-                max={99}
-                value={participants}
-                onChange={handleParticipantsChange}
-              />
-              <Button onClick={() => setParticipants(participants + 1)}>
-                +
-              </Button>
-            </div>
-            <div className="age-info">{t("ageInfo")}</div>
-          </div>
-        </div>
-      </Menu.Item>
-    </Menu>
-  );
+  const handleCheckAvailability = () => {
+    if (!selectedDate) {
+      message.error({
+        content: t("pleaseSelectDate"),
+        duration: 2,
+      });
+    }
+  };
 
   return (
     <div className="date-selector-container">
@@ -68,7 +47,31 @@ const DateSelector = ({ onDateSelect }) => {
       <div className="controls">
         <div className="participants">
           <Dropdown
-            menu={{ items: dropdownMenu }}
+            overlay={
+              <div className="participants-dropdown">
+                <div className="dropdown-item">
+                  <div className="label">{t("people")}</div>
+                  <div className="controls">
+                    <Button
+                      onClick={() => setParticipants(participants - 1)}
+                      disabled={participants <= 1}
+                    >
+                      -
+                    </Button>
+                    <InputNumber
+                      min={1}
+                      max={99}
+                      value={participants}
+                      onChange={handleParticipantsChange}
+                    />
+                    <Button onClick={() => setParticipants(participants + 1)}>
+                      +
+                    </Button>
+                  </div>
+                  <div className="age-info">{t("ageInfo")}</div>
+                </div>
+              </div>
+            }
             trigger={["click"]}
             open={isDropdownOpen}
             onOpenChange={setIsDropdownOpen}
@@ -84,9 +87,14 @@ const DateSelector = ({ onDateSelect }) => {
             placeholder={t("selectDate")}
             className="date-picker"
             disabledDate={disabledDate}
+            getPopupContainer={(triggerNode) => triggerNode.parentNode}
           />
         </div>
-        <Button type="primary" className="check-availability">
+        <Button
+          type="primary"
+          className="check-availability"
+          onClick={handleCheckAvailability}
+        >
           {t("check_availability")}
         </Button>
       </div>

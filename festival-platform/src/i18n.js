@@ -27,6 +27,7 @@ i18n
           menuMain: "Main",
           menuAboutUs: "About us",
           menuContacts: "Contacts",
+          pleaseSelectDate: "Please select a date to register",
         },
       },
       de: {
@@ -49,6 +50,7 @@ i18n
           menuMain: "Hauptseite",
           menuAboutUs: "Über uns",
           menuContacts: "Kontakte",
+          pleaseSelectDate: "Bitte wählen Sie ein Datum zur Anmeldung aus",
         },
       },
     },

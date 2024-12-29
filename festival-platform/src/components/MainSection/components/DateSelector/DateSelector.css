@@ -15,6 +15,13 @@
   font-size: 1.5rem;
 }
 
+.ant-picker-dropdown {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, 35%) !important;
+}
+
 .controls {
   display: flex;
   align-items: center;
