@@ -1,9 +1,9 @@
 .about-page-container {
   max-width: 800px;
+  min-height: 810px;
   margin: 0 auto;
   padding: 20px;
   text-align: center;
-  min-height: 535px;
 }
 
 .about-page-spinner {
@@ -33,4 +33,38 @@
   height: auto;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 1024px) {
+  .about-page-container {
+    max-width: 700px;
+    padding: 15px;
+  }
+
+  .about-page-image {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-page-container {
+    max-width: 600px;
+    padding: 10px;
+  }
+
+  .about-page-image {
+    max-width: 85%;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-page-container {
+    max-width: 100%;
+    padding: 10px;
+    min-height: 555px;
+  }
+
+  .about-page-image {
+    max-width: 100%;
+  }
 }

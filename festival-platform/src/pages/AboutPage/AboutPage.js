@@ -58,16 +58,11 @@ const AboutPage = () => {
     <div className="about-page-container">
       <Title level={2}>{aboutInfo[titleKey]}</Title>
       <Paragraph>{aboutInfo[descriptionKey]}</Paragraph>
-      <div className="about-page-images">
-        {aboutInfo.images.map((image, index) => (
-          <Image
-            key={index}
-            src={image}
-            alt={`About Image ${index + 1}`}
-            className="about-page-image"
-          />
-        ))}
-      </div>
+      <Image
+        src={aboutInfo.images[0]}
+        alt="About Image"
+        className="about-page-image"
+      />
     </div>
   );
 };
