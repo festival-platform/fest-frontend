@@ -25,6 +25,7 @@ i18n
           descriptionEvent: "Event Description", // заглушка
           googleButton: "Login with Google",
           menuMain: "Main",
+          days: "days",
           menuAboutUs: "About us",
           menuContacts: "Contacts",
           pleaseSelectDate: "Please select a date to register",
@@ -48,6 +49,7 @@ i18n
           descriptionEvent: "Veranstaltungsbeschreibung", // заглушка
           googleButton: "Melden Sie sich mit Google an",
           menuMain: "Hauptseite",
+          days: "Tage",
           menuAboutUs: "Über uns",
           menuContacts: "Kontakte",
           pleaseSelectDate: "Bitte wählen Sie ein Datum zur Anmeldung aus",

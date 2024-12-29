@@ -34,7 +34,6 @@
 .info-container {
   text-align: center;
   max-width: 800px;
-  margin-top: 20px;
 }
 
 .title {
@@ -98,7 +97,7 @@
 }
 
 .date-picker {
-  width: 100%;
+  width: 180px;
   border-radius: 5px;
   border: 1px solid #d9d9d9;
   padding: 8px;

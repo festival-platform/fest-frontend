@@ -67,7 +67,7 @@
   }
 
   .check-availability {
-    padding: 8px 16px;
+    padding: 16px;
     font-size: 0.9rem;
   }
 }
@@ -88,11 +88,11 @@
 
   .check-availability {
     width: 100%;
-    padding: 10px;
+    padding: 20px;
     font-size: 1rem;
   }
 
   .date-picker-wrapper .date-picker {
-    width: 100%;
+    width: 180px;
   }
 }

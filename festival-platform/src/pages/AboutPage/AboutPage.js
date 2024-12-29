@@ -1,0 +1,75 @@
+import React, { useState, useEffect } from "react";
+import { Spin, Alert, Typography, Image } from "antd";
+import { useTranslation } from "react-i18next";
+import "./AboutPage.css";
+
+const { Title, Paragraph } = Typography;
+
+const AboutPage = () => {
+  const { t, i18n } = useTranslation();
+  const [aboutInfo, setAboutInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchAboutInfo = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/about/");
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+        const data = await response.json();
+        setAboutInfo(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAboutInfo();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="about-page-spinner">
+        <Spin tip={t("loading")} size="large" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="about-page-error">
+        <Alert message={t("errorOccurred")} description={error} type="error" />
+      </div>
+    );
+  }
+
+  if (!aboutInfo) {
+    return null;
+  }
+
+  const titleKey = i18n.language === "de" ? "title_de" : "title_en";
+  const descriptionKey =
+    i18n.language === "de" ? "description_de" : "description_en";
+
+  return (
+    <div className="about-page-container">
+      <Title level={2}>{aboutInfo[titleKey]}</Title>
+      <Paragraph>{aboutInfo[descriptionKey]}</Paragraph>
+      <div className="about-page-images">
+        {aboutInfo.images.map((image, index) => (
+          <Image
+            key={index}
+            src={image}
+            alt={`About Image ${index + 1}`}
+            className="about-page-image"
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default AboutPage;

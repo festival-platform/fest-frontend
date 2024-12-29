@@ -32,9 +32,28 @@ export const fetchEventInfo = async (eventId, lang = "en") => {
       throw new Error(`Ошибка: ${response.status}`);
     }
     const data = await response.json();
-    return data; // Возвращаем объект с полной информацией о событии
+    return data;
   } catch (error) {
     console.error("Ошибка при запросе информации о мероприятии:", error);
-    return null; // Возвращаем null в случае ошибки
+    return null;
+  }
+};
+
+/**
+ * Получить всю информацию о мероприятии.
+ * @param {number} eventId - ID мероприятия.
+ * @returns {Promise<Object>} - Полная информация о мероприятии.
+ */
+export const fetchFullEventDetails = async (eventId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/events/${eventId}/`);
+    if (!response.ok) {
+      throw new Error(`Ошибка: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Ошибка при запросе полной информации о мероприятии:", error);
+    return null;
   }
 };
