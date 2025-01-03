@@ -4,10 +4,10 @@ import Footer from "./components/Footer/Footer";
 import MainSection from "./components/MainSection/MainSection";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import AboutPage from "./pages/AboutPage/AboutPage";
+import ContactsPage from "./pages/ContactsPage/ContactsPage";
 import "./App.css";
 import "./i18n";
 
-const Contacts = () => <div>Контакты</div>;
 const Home = () => <MainSection />;
 
 const App = () => {
@@ -19,7 +19,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<AboutPage />} />
-            <Route path="/contacts" element={<Contacts />} />
+            <Route path="/contacts" element={<ContactsPage />} />
           </Routes>
         </main>
         <Footer />
