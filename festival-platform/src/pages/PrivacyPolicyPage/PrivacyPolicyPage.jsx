@@ -1,9 +1,7 @@
-// src/pages/PrivacyPolicyPage.jsx
-
 import React from "react";
 import { Typography } from "antd";
 import { useTranslation } from "react-i18next";
-import "./PrivacyPolicyPage.css"; // При необходимости для стилизации
+import "./PrivacyPolicyPage.css";
 
 const { Title, Paragraph } = Typography;
 
