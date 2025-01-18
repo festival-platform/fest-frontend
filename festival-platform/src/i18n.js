@@ -33,6 +33,8 @@ i18n
           phone: "Phone",
           email: "Email",
           address: "Address",
+          privacyPolicy: "Privacy Policy",
+          impressum: "Legal Notice",
         },
       },
       de: {
@@ -61,6 +63,8 @@ i18n
           phone: "Telefon",
           email: "E-Mail",
           address: "Adresse",
+          privacyPolicy: "Datenschutz",
+          impressum: "Impressum",
         },
       },
     },
