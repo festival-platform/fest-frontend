@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
-import { Button, Alert, Input, Row, Col, Modal } from "antd";
+import { Button, Alert, Input, Row, Col } from "antd";
 import { useTranslation } from "react-i18next";
 import "./StripePayment.css";
 
@@ -19,9 +19,6 @@ const StripePayment = ({
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [setPaymentStatus] = useState(null);
-
-  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,6 +26,7 @@ const StripePayment = ({
     setError(null);
 
     if (!stripe || !elements) {
+      setError("Stripe не инициализирован. Попробуйте позже.");
       return;
     }
 
@@ -48,46 +46,51 @@ const StripePayment = ({
         }),
       });
 
-      const data = await response.json();
-      const { clientSecret, payment_status, message } = data;
-
-      if (payment_status) {
-        setPaymentStatus("success");
-        setSuccess(true);
-        onPaymentSuccess(data);
-        setIsModalVisible(true);
-      } else {
-        setPaymentStatus("failure");
-        setError(message || "Произошла ошибка при обработке платежа.");
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Ошибка сервера");
       }
 
-      if (clientSecret) {
-        const result = await stripe.confirmCardPayment(clientSecret, {
-          payment_method: {
-            card: cardElement,
-          },
-        });
+      const { client_secret } = await response.json();
 
-        if (result.error) {
-          setError(result.error.message);
-          setProcessing(false);
-        } else {
-          if (result.paymentIntent.status === "succeeded") {
+      if (!client_secret) {
+        throw new Error("Не удалось получить clientSecret.");
+      }
+
+      const result = await stripe.confirmCardPayment(client_secret, {
+        payment_method: {
+          card: cardElement,
+        },
+      });
+
+      if (result.error) {
+        setError(result.error.message);
+      } else {
+        switch (result.paymentIntent.status) {
+          case "succeeded":
             setSuccess(true);
-            setPaymentStatus("success");
             onPaymentSuccess(result.paymentIntent);
-            setIsModalVisible(true);
-          }
+            break;
+          case "requires_action":
+            const confirmResult = await stripe.confirmCardPayment(
+              client_secret
+            );
+            if (confirmResult.error) {
+              setError(confirmResult.error.message);
+            } else if (confirmResult.paymentIntent.status === "succeeded") {
+              setSuccess(true);
+              onPaymentSuccess(confirmResult.paymentIntent);
+            }
+            break;
+          default:
+            setError("Неизвестный статус платежа.");
         }
       }
     } catch (err) {
-      setError(t("paymentError"));
+      setError(err.message || "Произошла ошибка при обработке платежа.");
+    } finally {
       setProcessing(false);
     }
-  };
-
-  const handleModalOk = () => {
-    setIsModalVisible(false);
   };
 
   return (
@@ -151,16 +154,6 @@ const StripePayment = ({
           </Button>
         </form>
       )}
-
-      <Modal
-        title={t("paymentSuccess")}
-        visible={isModalVisible}
-        onOk={handleModalOk}
-        onCancel={handleModalOk}
-        okText={t("ok")}
-      >
-        <p>{t("paymentMessage")}</p>
-      </Modal>
     </div>
   );
 };
