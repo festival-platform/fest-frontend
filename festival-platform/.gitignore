@@ -58,3 +58,6 @@ yarn-error.log*
 *.sw?
 
 .env
+
+/config.js
+/src/config.js

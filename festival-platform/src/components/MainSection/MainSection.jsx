@@ -1,18 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { Carousel, Typography, Row, Col } from "antd";
+import { Carousel, Typography, Row, Col, Radio } from "antd";
 import { DollarCircleOutlined, ClockCircleOutlined } from "@ant-design/icons";
 import DateSelector from "./components/DateSelector/DateSelector";
 import ReviewForm from "../ReviewForm/ReviewForm";
+import StripePayment from "./components/StripePayment/StripePayment";
+import PayPalPayment from "./components/PayPalPayment/PayPalPayment";
 import "./MainSection.css";
 import { useTranslation } from "react-i18next";
 import i18n from "../../i18n";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import config from "../../config";
 
 const { Title, Paragraph } = Typography;
+
+const stripePromise = loadStripe(config.stripePublicKey);
 
 const BASE_URL = "http://127.0.0.1:8000/api";
 
 const MainSection = ({ eventId = 1, lang = "de" }) => {
   const [selectedDate, setSelectedDate] = useState(null);
+  const [participants] = useState(1);
+  const [paymentMethod, setPaymentMethod] = useState("stripe");
+  const [paymentEnabled, setPaymentEnabled] = useState(false);
+  const [stripeWidgetEnabled, setStripeWidgetEnabled] = useState(false);
   const [data, setData] = useState(null);
   const { t } = useTranslation();
 
@@ -40,7 +51,6 @@ const MainSection = ({ eventId = 1, lang = "de" }) => {
         }
         const json = await response.json();
         setData(json);
-
         addTranslations(json);
       } catch (error) {
         console.error("Ошибка при запросе данных о мероприятии:", error);
@@ -54,7 +64,16 @@ const MainSection = ({ eventId = 1, lang = "de" }) => {
     setSelectedDate(dateString);
   };
 
+  const handleCheckAvailability = (isDateSelected) => {
+    if (isDateSelected) {
+      setPaymentEnabled(true);
+      setStripeWidgetEnabled(true);
+    }
+  };
+
   if (!data) return <div className="loading">Loading...</div>;
+
+  const totalAmount = data.price * participants * 100;
 
   return (
     <div className="main-section">
@@ -109,8 +128,51 @@ const MainSection = ({ eventId = 1, lang = "de" }) => {
 
         <DateSelector
           onDateSelect={handleDateChange}
+          onCheckAvailability={handleCheckAvailability}
           availableDates={data.dates}
         />
+
+        {paymentEnabled && (
+          <div className="payment-method">
+            <Title level={4}>{t("selectPaymentMethod")}</Title>
+            <Radio.Group
+              value={paymentMethod}
+              onChange={(e) => setPaymentMethod(e.target.value)}
+              buttonStyle="solid"
+            >
+              <Radio.Button value="stripe">{t("stripe")}</Radio.Button>
+              <Radio.Button value="paypal">{t("paypal")}</Radio.Button>
+            </Radio.Group>
+          </div>
+        )}
+
+        {selectedDate &&
+          participants > 0 &&
+          paymentMethod === "stripe" &&
+          stripeWidgetEnabled && (
+            <div className="payment-section">
+              <Row gutter={16}>
+                <Col span={21}>
+                  <Elements stripe={stripePromise}>
+                    <StripePayment
+                      amount={totalAmount}
+                      selectedDate={selectedDate}
+                      participants={participants}
+                      onPaymentSuccess={(data) => {
+                        console.log("Payment successful:", data);
+                      }}
+                    />
+                  </Elements>
+                </Col>
+              </Row>
+            </div>
+          )}
+
+        {selectedDate && participants > 0 && paymentMethod === "paypal" && (
+          <div className="payment-section">
+            <PayPalPayment amount={totalAmount} />
+          </div>
+        )}
 
         <div className="review-section">
           <ReviewForm />

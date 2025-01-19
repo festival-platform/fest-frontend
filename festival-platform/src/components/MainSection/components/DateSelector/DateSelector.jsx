@@ -5,7 +5,7 @@ import { UserOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import "./DateSelector.css";
 
-const DateSelector = ({ onDateSelect }) => {
+const DateSelector = ({ onDateSelect, onCheckAvailability }) => {
   const { t } = useTranslation();
   const [enabledDates, setEnabledDates] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -38,6 +38,8 @@ const DateSelector = ({ onDateSelect }) => {
         content: t("pleaseSelectDate"),
         duration: 2,
       });
+    } else {
+      onCheckAvailability(true);
     }
   };
 

@@ -1,62 +1,106 @@
-import React, { useState } from "react";
-import { Dropdown, Button, InputNumber, Menu } from "antd";
+import React, { useState, useEffect } from "react";
+import { DatePicker, Button, Dropdown, InputNumber, message } from "antd";
+import { fetchEventDates } from "../../../../api/eventsApi";
 import { UserOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
-import "./ParticipantsSelector.css";
+import "./DateSelector.css";
 
-const ParticipantsSelector = () => {
-  const [count, setCount] = useState(1);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+const DateSelector = ({ onDateSelect, onParticipantsSelect }) => {
   const { t } = useTranslation();
+  const [enabledDates, setEnabledDates] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [participants, setParticipants] = useState(1);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const handleIncrement = () => {
-    setCount((prev) => prev + 1);
+  useEffect(() => {
+    fetchEventDates(1).then((dates) => {
+      setEnabledDates(dates);
+    });
+  }, []);
+
+  const handleDateChange = (date, dateString) => {
+    setSelectedDate(dateString);
+    onDateSelect(dateString);
   };
 
-  const handleDecrement = () => {
-    if (count > 1) setCount((prev) => prev - 1);
+  const disabledDate = (current) => {
+    if (!current) return false;
+    return !enabledDates.includes(current.format("YYYY-MM-DD"));
   };
 
-  const handleInputChange = (value) => {
-    setCount(value || 1);
+  const handleParticipantsChange = (value) => {
+    setParticipants(value);
+    onParticipantsSelect(value);
   };
 
-  const menu = (
-    <Menu className="participants-dropdown">
-      <Menu.Item key="1">
-        <div className="dropdown-item">
-          <div className="label">{t("people")}</div>
-          <div className="controls">
-            <Button onClick={handleDecrement} disabled={count <= 1}>
-              {t("decrement")}
-            </Button>
-            <InputNumber
-              min={1}
-              max={99}
-              value={count}
-              onChange={handleInputChange}
-            />
-            <Button onClick={handleIncrement}>{t("increment")}</Button>
-          </div>
-          <div className="age-info">{t("ageInfo")}</div>
-        </div>
-      </Menu.Item>
-    </Menu>
-  );
+  const handleCheckAvailability = () => {
+    if (!selectedDate) {
+      message.error({
+        content: t("pleaseSelectDate"),
+        duration: 2,
+      });
+    }
+  };
 
   return (
-    <Dropdown
-      menu={menu}
-      trigger={["click"]}
-      open={isDropdownOpen}
-      onOpenChange={setIsDropdownOpen}
-      overlayClassName="participants-dropdown"
-    >
-      <Button className="participants-selector">
-        <UserOutlined /> {t("people")} x {count}
-      </Button>
-    </Dropdown>
+    <div className="date-selector-container">
+      <h3>{t("selectParticipantsAndDate")}</h3>
+      <div className="controls">
+        <div className="participants">
+          <Dropdown
+            overlay={
+              <div className="participants-dropdown">
+                <div className="dropdown-item">
+                  <div className="label">{t("people")}</div>
+                  <div className="controls">
+                    <Button
+                      onClick={() => setParticipants(participants - 1)}
+                      disabled={participants <= 1}
+                    >
+                      -
+                    </Button>
+                    <InputNumber
+                      min={1}
+                      max={99}
+                      value={participants}
+                      onChange={handleParticipantsChange}
+                    />
+                    <Button onClick={() => setParticipants(participants + 1)}>
+                      +
+                    </Button>
+                  </div>
+                  <div className="age-info">{t("ageInfo")}</div>
+                </div>
+              </div>
+            }
+            trigger={["click"]}
+            open={isDropdownOpen}
+            onOpenChange={setIsDropdownOpen}
+          >
+            <Button className="participants-selector">
+              <UserOutlined /> {t("people")} x {participants}
+            </Button>
+          </Dropdown>
+        </div>
+        <div className="date-picker-wrapper">
+          <DatePicker
+            onChange={handleDateChange}
+            placeholder={t("selectDate")}
+            className="date-picker"
+            disabledDate={disabledDate}
+            getPopupContainer={(triggerNode) => triggerNode.parentNode}
+          />
+        </div>
+        <Button
+          type="primary"
+          className="check-availability"
+          onClick={handleCheckAvailability}
+        >
+          {t("check_availability")}
+        </Button>
+      </div>
+    </div>
   );
 };
 
-export default ParticipantsSelector;
+export default DateSelector;
