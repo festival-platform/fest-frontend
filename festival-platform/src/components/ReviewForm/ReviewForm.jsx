@@ -3,16 +3,20 @@ import { Rate, Button, Input, message } from "antd";
 import { GoogleOutlined } from "@ant-design/icons";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import axios from "axios";
 import "./ReviewForm.css";
 import { useTranslation } from "react-i18next";
+import config from "../../config";
+
+const BASE_URL = "http://127.0.0.1:8000/api";
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
+  apiKey: config.apiKey,
+  authDomain: config.authDomain,
+  projectId: config.projectId,
+  storageBucket: config.storageBucket,
+  messagingSenderId: config.messagingSenderId,
+  appId: config.appId,
 };
 
 const app = initializeApp(firebaseConfig);
@@ -39,19 +43,45 @@ const ReviewForm = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!user) {
       message.error("You need to log in before publishing your review.");
       return;
     }
 
     setIsSubmitting(true);
-    setTimeout(() => {
+
+    const reviewData = {
+      author: user.displayName,
+      text: review,
+      stars: rating,
+      event: 1,
+    };
+
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/reviews/create/`,
+        reviewData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status === 201) {
+        message.success(t("successfullyPublishedMessage"));
+        setReview("");
+        setRating(0);
+      } else {
+        message.error("Failed to publish your review.");
+      }
+    } catch (error) {
+      console.error("Error submitting review:", error);
+      message.error("An error occurred while publishing your review.");
+    } finally {
       setIsSubmitting(false);
-      message.success("Your review has been successfully published!");
-      setReview("");
-      setRating(0);
-    }, 1000);
+    }
   };
 
   return (
@@ -88,7 +118,7 @@ const ReviewForm = () => {
           loading={isSubmitting}
           disabled={!rating || !review.trim()}
         >
-          Publish Review
+          {t("googleButtonPublish")}
         </Button>
       )}
     </div>

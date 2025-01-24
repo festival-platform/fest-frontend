@@ -5,6 +5,7 @@ import DateSelector from "./components/DateSelector/DateSelector";
 import ReviewForm from "../ReviewForm/ReviewForm";
 import StripePayment from "./components/StripePayment/StripePayment";
 import PayPalPayment from "./components/PayPalPayment/PayPalPayment";
+import ReviewsCarousel from "./components/ReviewsCarousel/ReviewsCarousel";
 import "./MainSection.css";
 import { useTranslation } from "react-i18next";
 import i18n from "../../i18n";
@@ -20,7 +21,7 @@ const BASE_URL = "http://127.0.0.1:8000/api";
 
 const MainSection = ({ eventId = 1, lang = "de" }) => {
   const [selectedDate, setSelectedDate] = useState(null);
-  const [participants] = useState(1);
+  const [participants, setParticipants] = useState(1);
   const [paymentMethod, setPaymentMethod] = useState("stripe");
   const [paymentEnabled, setPaymentEnabled] = useState(false);
   const [stripeWidgetEnabled, setStripeWidgetEnabled] = useState(false);
@@ -128,6 +129,7 @@ const MainSection = ({ eventId = 1, lang = "de" }) => {
 
         <DateSelector
           onDateSelect={handleDateChange}
+          onParticipantsSelect={(value) => setParticipants(value)}
           onCheckAvailability={handleCheckAvailability}
           availableDates={data.dates}
         />
@@ -152,7 +154,7 @@ const MainSection = ({ eventId = 1, lang = "de" }) => {
           stripeWidgetEnabled && (
             <div className="payment-section">
               <Row gutter={16}>
-                <Col span={21}>
+                <Col span={22}>
                   <Elements stripe={stripePromise}>
                     <StripePayment
                       amount={totalAmount}
@@ -170,9 +172,20 @@ const MainSection = ({ eventId = 1, lang = "de" }) => {
 
         {selectedDate && participants > 0 && paymentMethod === "paypal" && (
           <div className="payment-section">
-            <PayPalPayment amount={totalAmount} />
+            <PayPalPayment
+              amount={totalAmount}
+              selectedDate={selectedDate}
+              participants={participants}
+              onPaymentSuccess={(details) => {
+                console.log("PayPal payment successful:", details);
+              }}
+            />
           </div>
         )}
+
+        <div className="reviews-container">
+          <ReviewsCarousel />
+        </div>
 
         <div className="review-section">
           <ReviewForm />

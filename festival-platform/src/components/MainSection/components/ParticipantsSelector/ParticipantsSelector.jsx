@@ -54,7 +54,7 @@ const DateSelector = ({ onDateSelect, onParticipantsSelect }) => {
                   <div className="label">{t("people")}</div>
                   <div className="controls">
                     <Button
-                      onClick={() => setParticipants(participants - 1)}
+                      onClick={() => handleParticipantsChange(participants - 1)}
                       disabled={participants <= 1}
                     >
                       -
@@ -65,7 +65,9 @@ const DateSelector = ({ onDateSelect, onParticipantsSelect }) => {
                       value={participants}
                       onChange={handleParticipantsChange}
                     />
-                    <Button onClick={() => setParticipants(participants + 1)}>
+                    <Button
+                      onClick={() => handleParticipantsChange(participants + 1)}
+                    >
                       +
                     </Button>
                   </div>

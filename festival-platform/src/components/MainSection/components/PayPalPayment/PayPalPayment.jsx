@@ -1,17 +1,72 @@
 import React from "react";
-import { Button } from "antd";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
-const PayPalPayment = ({ amount }) => {
-  const handlePayment = () => {
-    alert(`Оплата через PayPal на сумму: ${amount / 100} €`);
+const PayPalPayment = ({
+  amount,
+  selectedDate,
+  participants,
+  onPaymentSuccess,
+}) => {
+  const handlePaymentSuccess = async (details) => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/events/1/book", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          first_name: details.payer.name.given_name,
+          last_name: details.payer.name.surname,
+          email: details.payer.email_address,
+          date: selectedDate,
+          quantity: participants,
+          payment_provider: "paypal",
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(
+          errorData.error || "Ошибка сервера при обработке PayPal платежа."
+        );
+      }
+
+      console.log("Server successfully processed the PayPal payment.");
+      onPaymentSuccess(details);
+    } catch (err) {
+      console.error("Ошибка при обработке платежа через PayPal:", err.message);
+    }
   };
 
   return (
-    <div>
-      <Button type="primary" onClick={handlePayment}>
-        Оплатить через PayPal
-      </Button>
-    </div>
+    <PayPalScriptProvider
+      options={{
+        "client-id":
+          "ATNejC8QXbjNnHgPBCV7MqlIUhksB65g_4zc-bbKcVxz7ahRFL3k0jll94ZthLSPTbATDZ2E179Zq_sL",
+        currency: "EUR",
+      }}
+    >
+      <PayPalButtons
+        style={{ layout: "vertical" }}
+        createOrder={(data, actions) => {
+          return actions.order.create({
+            purchase_units: [
+              {
+                amount: {
+                  value: (amount / 100).toFixed(2),
+                },
+              },
+            ],
+          });
+        }}
+        onApprove={(data, actions) => {
+          return actions.order.capture().then((details) => {
+            handlePaymentSuccess(details);
+          });
+        }}
+        onError={(err) => {
+          console.error("Ошибка PayPal:", err);
+        }}
+      />
+    </PayPalScriptProvider>
   );
 };
 

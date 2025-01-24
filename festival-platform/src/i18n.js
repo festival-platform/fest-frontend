@@ -42,6 +42,11 @@ i18n
           paymentError: "An error occurred while processing the payment.",
           payButton: "Pay via Stripe",
           selectPaymentMethod: "Select payment method",
+          continueButton: "Go to payment",
+          googleButtonPublish: "Publish review",
+          successfullyPublishedMessage:
+            "Your review has been successfully published",
+          failedPublishedMessage: "Failed to publish your review",
         },
       },
       de: {
@@ -80,6 +85,12 @@ i18n
             "Es ist ein Fehler bei der Zahlungsabwicklung aufgetreten.",
           payButton: "Mit Stripe bezahlen",
           selectPaymentMethod: "Zahlungsart auswählen",
+          continueButton: "Gehen Sie zur Zahlung",
+          googleButtonPublish: "Rezension veröffentlichen",
+          successfullyPublishedMessage:
+            "Ihre Bewertung wurde erfolgreich veröffentlicht",
+          failedPublishedMessage:
+            "Ihre Bewertung konnte nicht veröffentlicht werden",
         },
       },
     },
