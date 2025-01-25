@@ -1,15 +1,17 @@
 .reviews-carousel {
-  margin: 24px auto;
-  max-width: 400px;
+  max-width: 100%;
   text-align: center;
   padding: 20px 0;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .review-card {
-  max-width: 350px;
+  max-width: 100%;
   border-radius: 8px;
   background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
 }
 
 .review-avatar {
@@ -26,4 +28,20 @@
 .review-text {
   font-size: 14px;
   color: #555;
+}
+
+@media (max-width: 768px) {
+  .review-card {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .review-card {
+    max-width: 100%;
+  }
+
+  .review-text {
+    font-size: 12px;
+  }
 }

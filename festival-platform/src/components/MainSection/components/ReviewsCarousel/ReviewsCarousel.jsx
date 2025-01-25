@@ -62,18 +62,25 @@ const ReviewsCarousel = ({ eventId }) => {
 
   return (
     <div className="reviews-carousel">
-      <h3>{t("reviews") || "Отзывы"}</h3>
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
-        spaceBetween={30}
-        slidesPerView={3}
-        navigation
-        pagination={{ clickable: true }}
+        spaceBetween={20}
+        slidesPerView={1}
+        // pagination={{ clickable: true }}
         autoplay={{ delay: 3000 }}
         breakpoints={{
-          1024: { slidesPerView: 3 },
-          768: { slidesPerView: 2 },
-          480: { slidesPerView: 1 },
+          1024: {
+            slidesPerView: 3,
+            spaceBetween: 30,
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          480: {
+            slidesPerView: 1,
+            spaceBetween: 10,
+          },
         }}
       >
         {reviews.map((review, index) => (
