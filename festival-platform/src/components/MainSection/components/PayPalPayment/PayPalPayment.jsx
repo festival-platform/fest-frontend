@@ -1,5 +1,7 @@
 import React from "react";
+import { notification } from "antd";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import { useTranslation } from "react-i18next";
 
 const PayPalPayment = ({
   amount,
@@ -7,6 +9,8 @@ const PayPalPayment = ({
   participants,
   onPaymentSuccess,
 }) => {
+  const { t } = useTranslation();
+
   const handlePaymentSuccess = async (details) => {
     try {
       const response = await fetch("http://127.0.0.1:8000/api/events/1/book", {
@@ -29,10 +33,21 @@ const PayPalPayment = ({
         );
       }
 
+      notification.success({
+        message: t("bookedSuccessMessage"),
+        description: t("bookedSuccessInfo"),
+        duration: 5,
+      });
+
       console.log("Server successfully processed the PayPal payment.");
       onPaymentSuccess(details);
     } catch (err) {
       console.error("Ошибка при обработке платежа через PayPal:", err.message);
+      notification.error({
+        message: "Ошибка оплаты",
+        description: err.message || "Произошла ошибка при обработке платежа.",
+        duration: 5,
+      });
     }
   };
 

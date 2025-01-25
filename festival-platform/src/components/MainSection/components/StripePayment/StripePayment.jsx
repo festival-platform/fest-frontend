@@ -6,7 +6,7 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import { Button, Input, Row, Col, Alert } from "antd";
+import { Button, Input, Row, Col, Alert, notification } from "antd";
 import { useTranslation } from "react-i18next";
 import config from "../../../../config";
 import "./StripePayment.css";
@@ -126,6 +126,11 @@ const PaymentForm = ({ userSecret, onPaymentSuccess }) => {
       if (result.error) {
         setError(result.error.message);
       } else if (result.paymentIntent.status === "succeeded") {
+        notification.success({
+          message: t("bookedSuccessMessage"),
+          description: t("bookedSuccessInfo"),
+          duration: 5,
+        });
         onPaymentSuccess(result.paymentIntent);
       } else {
         setError("Неизвестный статус платежа.");
@@ -176,10 +181,6 @@ const StripePaymentContainer = ({
     setUserSecret(secret);
   };
 
-  const handlePaymentSuccess = (paymentIntent) => {
-    console.log("Payment successful:", paymentIntent);
-  };
-
   const currentLocale = i18n.language;
 
   return (
@@ -189,7 +190,7 @@ const StripePaymentContainer = ({
           onUserSecretReceived={handleUserSecretReceived}
           selectedDate={selectedDate}
           participants={participants}
-          onPaymentSuccess={handlePaymentSuccess}
+          onPaymentSuccess={onPaymentSuccess}
         />
       ) : (
         <Elements
@@ -198,7 +199,7 @@ const StripePaymentContainer = ({
         >
           <PaymentForm
             userSecret={userSecret}
-            onPaymentSuccess={handlePaymentSuccess}
+            onPaymentSuccess={onPaymentSuccess}
           />
         </Elements>
       )}

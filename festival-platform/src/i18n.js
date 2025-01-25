@@ -47,6 +47,10 @@ i18n
           successfullyPublishedMessage:
             "Your review has been successfully published",
           failedPublishedMessage: "Failed to publish your review",
+          bookedSuccessMessage:
+            "Oktoberfest seats have been successfully booked",
+          bookedSuccessInfo:
+            "All additional information has already been sent to you by email",
         },
       },
       de: {
@@ -91,6 +95,9 @@ i18n
             "Ihre Bewertung wurde erfolgreich veröffentlicht",
           failedPublishedMessage:
             "Ihre Bewertung konnte nicht veröffentlicht werden",
+          bookedSuccessMessage: "Oktoberfest-Plätze wurden erfolgreich gebucht",
+          bookedSuccessInfo:
+            "Alle weiteren Informationen wurden Ihnen bereits per E-Mail zugesandt",
         },
       },
     },
