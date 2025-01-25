@@ -32,6 +32,16 @@
   color: white;
 }
 
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}
+
+.logo-image {
+  height: 40px;
+}
+
 @media (max-width: 767px) {
   .header {
     height: auto;

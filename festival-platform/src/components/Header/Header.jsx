@@ -16,7 +16,9 @@ const Header = () => {
 
   return (
     <div className="header">
-      <div className="logo">LOGO</div>
+      <div className="logo">
+        <img src="/logo_oct.png" alt="Logo" className="logo-image" />
+      </div>
       <div className="menu-buttons">
         {menuItems.map((item) => (
           <Link key={item.key} to={item.link}>
