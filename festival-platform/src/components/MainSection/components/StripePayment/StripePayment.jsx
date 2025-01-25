@@ -20,6 +20,7 @@ const UserInfoForm = ({
   onPaymentSuccess,
 }) => {
   const { t } = useTranslation();
+  const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -31,7 +32,7 @@ const UserInfoForm = ({
     setError(null);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/events/1/book", {
+      const response = await fetch(`${apiBaseUrl}/events/1/book`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -20,8 +20,7 @@ import config from "../../config";
 const { Title, Paragraph } = Typography;
 
 const stripePromise = loadStripe(config.stripePublicKey);
-
-const BASE_URL = "http://127.0.0.1:8000/api";
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const MainSection = ({ eventId = 1, lang = "de" }) => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -49,7 +48,7 @@ const MainSection = ({ eventId = 1, lang = "de" }) => {
     const fetchEventData = async () => {
       try {
         const response = await fetch(
-          `${BASE_URL}/events/${eventId}/?lang=${lang}`
+          `${apiBaseUrl}/events/${eventId}/?lang=${lang}`
         );
         if (!response.ok) {
           throw new Error(`Ошибка: ${response.status}`);

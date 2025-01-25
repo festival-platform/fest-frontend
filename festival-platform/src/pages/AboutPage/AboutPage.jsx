@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import "./AboutPage.css";
 
 const { Title, Paragraph } = Typography;
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const AboutPage = () => {
   const { t, i18n } = useTranslation();
@@ -14,7 +15,7 @@ const AboutPage = () => {
   useEffect(() => {
     const fetchAboutInfo = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/api/about/");
+        const response = await fetch(`${apiBaseUrl}/about/`);
         if (!response.ok) {
           throw new Error(`Error: ${response.status}`);
         }

@@ -1,4 +1,4 @@
-const BASE_URL = "http://127.0.0.1:8000/api";
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 /**
  * Получить доступные даты для события.
@@ -7,7 +7,7 @@ const BASE_URL = "http://127.0.0.1:8000/api";
  */
 export const fetchEventDates = async (eventId) => {
   try {
-    const response = await fetch(`${BASE_URL}/events/${eventId}/dates/`);
+    const response = await fetch(`${apiBaseUrl}/events/${eventId}/dates/`);
     if (!response.ok) {
       throw new Error(`Ошибка: ${response.status}`);
     }
@@ -27,7 +27,9 @@ export const fetchEventDates = async (eventId) => {
  */
 export const fetchEventInfo = async (eventId, lang = "en") => {
   try {
-    const response = await fetch(`${BASE_URL}/events/${eventId}/?lang=${lang}`);
+    const response = await fetch(
+      `${apiBaseUrl}/events/${eventId}/?lang=${lang}`
+    );
     if (!response.ok) {
       throw new Error(`Ошибка: ${response.status}`);
     }
@@ -46,7 +48,7 @@ export const fetchEventInfo = async (eventId, lang = "en") => {
  */
 export const fetchFullEventDetails = async (eventId) => {
   try {
-    const response = await fetch(`${BASE_URL}/events/${eventId}/`);
+    const response = await fetch(`${apiBaseUrl}/events/${eventId}/`);
     if (!response.ok) {
       throw new Error(`Ошибка: ${response.status}`);
     }

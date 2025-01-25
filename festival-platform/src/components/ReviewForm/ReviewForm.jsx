@@ -8,7 +8,7 @@ import "./ReviewForm.css";
 import { useTranslation } from "react-i18next";
 import config from "../../config";
 
-const BASE_URL = "http://127.0.0.1:8000/api";
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const firebaseConfig = {
   apiKey: config.apiKey,
@@ -60,7 +60,7 @@ const ReviewForm = () => {
 
     try {
       const response = await axios.post(
-        `${BASE_URL}/reviews/create/`,
+        `${apiBaseUrl}/reviews/create/`,
         reviewData,
         {
           headers: {

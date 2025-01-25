@@ -11,8 +11,7 @@ import "./ReviewsCarousel.css";
 import { useTranslation } from "react-i18next";
 
 const { Meta } = Card;
-
-const BASE_URL = "http://127.0.0.1:8000/api";
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const ReviewsCarousel = ({ eventId }) => {
   const [reviews, setReviews] = useState([]);
@@ -22,7 +21,7 @@ const ReviewsCarousel = ({ eventId }) => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/events/1/reviews`);
+        const response = await axios.get(`${apiBaseUrl}/events/1/reviews`);
         console.log("Полученные отзывы:", response.data);
 
         if (Array.isArray(response.data)) {

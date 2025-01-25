@@ -1,4 +1,4 @@
-const BASE_URL = "http://127.0.0.1:8000/api";
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 /**
  * Получить информацию о странице "Contacts".
@@ -6,7 +6,7 @@ const BASE_URL = "http://127.0.0.1:8000/api";
  */
 export const fetchAboutInfo = async () => {
   try {
-    const response = await fetch(`${BASE_URL}/contacts/`);
+    const response = await fetch(`${apiBaseUrl}/contacts/`);
     if (!response.ok) {
       throw new Error(`Ошибка: ${response.status}`);
     }
