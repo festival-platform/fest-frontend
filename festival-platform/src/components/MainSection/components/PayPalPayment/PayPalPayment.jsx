@@ -2,6 +2,7 @@ import React from "react";
 import { notification } from "antd";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useTranslation } from "react-i18next";
+import config from "../../../../config";
 
 const PayPalPayment = ({
   amount,
@@ -10,6 +11,7 @@ const PayPalPayment = ({
   onPaymentSuccess,
 }) => {
   const { t } = useTranslation();
+  const clientId = config.clientId;
 
   const handlePaymentSuccess = async (details) => {
     try {
@@ -54,13 +56,13 @@ const PayPalPayment = ({
   return (
     <PayPalScriptProvider
       options={{
-        "client-id":
-          "ATNejC8QXbjNnHgPBCV7MqlIUhksB65g_4zc-bbKcVxz7ahRFL3k0jll94ZthLSPTbATDZ2E179Zq_sL",
+        "client-id": clientId,
         currency: "EUR",
       }}
     >
       <PayPalButtons
         style={{ layout: "vertical" }}
+        fundingSource="paypal"
         createOrder={(data, actions) => {
           return actions.order.create({
             purchase_units: [

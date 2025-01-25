@@ -1,26 +1,62 @@
 import React, { useState, useEffect } from "react";
-import { DatePicker, Button, Dropdown, InputNumber, message } from "antd";
+import { DatePicker, Button, InputNumber, message, Typography } from "antd";
 import { fetchEventDates } from "../../../../api/eventsApi";
-import { UserOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import "./DateSelector.css";
 
-const DateSelector = ({ onDateSelect, onCheckAvailability }) => {
+const { Text } = Typography;
+
+const DateSelector = ({
+  onDateSelect,
+  onCheckAvailability,
+  onParticipantsSelect,
+}) => {
   const { t } = useTranslation();
   const [enabledDates, setEnabledDates] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
   const [participants, setParticipants] = useState(1);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
-    fetchEventDates(1).then((dates) => {
-      setEnabledDates(dates);
-    });
-  }, []);
+    const loadDates = async () => {
+      try {
+        const dates = await fetchEventDates(1);
+        if (Array.isArray(dates)) {
+          setEnabledDates(dates);
+        } else {
+          console.error("Invalid dates format:", dates);
+        }
+      } catch (error) {
+        console.error("Error fetching dates:", error);
+        message.error(t("errorFetchingDates"));
+      }
+    };
+
+    loadDates();
+  }, [t]);
 
   const handleDateChange = (date, dateString) => {
     setSelectedDate(dateString);
     onDateSelect(dateString);
+    console.log("Selected date:", dateString); // Debugging log
+  };
+
+  const handleParticipantsChange = (value) => {
+    if (value >= 1 && value <= 99) {
+      setParticipants(value);
+      if (onParticipantsSelect) {
+        onParticipantsSelect(value);
+      }
+      console.log("Participants updated to:", value); // Debugging log
+    }
+  };
+
+  const handleCheckAvailability = () => {
+    if (!selectedDate) {
+      message.error(t("pleaseSelectDate"));
+    } else {
+      onCheckAvailability(selectedDate);
+      console.log("Date availability checked for:", selectedDate); // Debugging log
+    }
   };
 
   const disabledDate = (current) => {
@@ -28,60 +64,34 @@ const DateSelector = ({ onDateSelect, onCheckAvailability }) => {
     return !enabledDates.includes(current.format("YYYY-MM-DD"));
   };
 
-  const handleParticipantsChange = (value) => {
-    setParticipants(value);
-  };
-
-  const handleCheckAvailability = () => {
-    if (!selectedDate) {
-      message.error({
-        content: t("pleaseSelectDate"),
-        duration: 2,
-      });
-    } else {
-      onCheckAvailability(true);
-    }
-  };
-
   return (
     <div className="date-selector-container">
       <h3>{t("selectParticipantsAndDate")}</h3>
       <div className="controls">
-        <div className="participants">
-          <Dropdown
-            overlay={
-              <div className="participants-dropdown">
-                <div className="dropdown-item">
-                  <div className="label">{t("people")}</div>
-                  <div className="controls">
-                    <Button
-                      onClick={() => setParticipants(participants - 1)}
-                      disabled={participants <= 1}
-                    >
-                      -
-                    </Button>
-                    <InputNumber
-                      min={1}
-                      max={99}
-                      value={participants}
-                      onChange={handleParticipantsChange}
-                    />
-                    <Button onClick={() => setParticipants(participants + 1)}>
-                      +
-                    </Button>
-                  </div>
-                  <div className="age-info">{t("ageInfo")}</div>
-                </div>
-              </div>
-            }
-            trigger={["click"]}
-            open={isDropdownOpen}
-            onOpenChange={setIsDropdownOpen}
-          >
-            <Button className="participants-selector">
-              <UserOutlined /> {t("people")} x {participants}
+        <div className="participants-controls">
+          <Text className="label">{t("people")}: </Text>
+          {participants > 1 && (
+            <Button
+              onClick={() => handleParticipantsChange(participants - 1)}
+              className="participant-button"
+            >
+              -
             </Button>
-          </Dropdown>
+          )}
+          <InputNumber
+            min={1}
+            max={99}
+            value={participants}
+            onChange={handleParticipantsChange}
+            className="participant-input"
+          />
+          <Button
+            onClick={() => handleParticipantsChange(participants + 1)}
+            disabled={participants >= 99}
+            className="participant-button"
+          >
+            +
+          </Button>
         </div>
         <div className="date-picker-wrapper">
           <DatePicker
@@ -89,7 +99,6 @@ const DateSelector = ({ onDateSelect, onCheckAvailability }) => {
             placeholder={t("selectDate")}
             className="date-picker"
             disabledDate={disabledDate}
-            getPopupContainer={(triggerNode) => triggerNode.parentNode}
           />
         </div>
         <Button
