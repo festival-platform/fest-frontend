@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Carousel, Typography, Row, Col, Radio } from "antd";
-import { DollarCircleOutlined, ClockCircleOutlined } from "@ant-design/icons";
+import {
+  DollarCircleOutlined,
+  ClockCircleOutlined,
+  LoadingOutlined,
+} from "@ant-design/icons";
 import DateSelector from "./components/DateSelector/DateSelector";
 import ReviewForm from "../ReviewForm/ReviewForm";
 import StripePayment from "./components/StripePayment/StripePayment";
@@ -72,7 +76,15 @@ const MainSection = ({ eventId = 1, lang = "de" }) => {
     }
   };
 
-  if (!data) return <div className="loading">Loading...</div>;
+  if (!data)
+    return (
+      <div className="loading-container">
+        <div className="spinner">
+          <LoadingOutlined style={{ fontSize: 50, color: "#1890ff" }} spin />
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
 
   const totalAmount = data.price * participants * 100;
 
