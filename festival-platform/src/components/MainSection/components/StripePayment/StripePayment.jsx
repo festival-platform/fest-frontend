@@ -185,7 +185,7 @@ const PaymentForm = ({ userSecret, onPaymentSuccess }) => {
         loading={processing}
         style={{ marginTop: "20px" }}
       >
-        {t("payButton")} {/* Например, "Оплатить" */}
+        {t("payButton")}
       </Button>
     </form>
   );
