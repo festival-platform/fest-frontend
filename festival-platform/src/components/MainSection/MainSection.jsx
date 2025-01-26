@@ -25,7 +25,7 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 const MainSection = ({ eventId = 1, lang = "de" }) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [participants, setParticipants] = useState(1);
-  const [paymentMethod, setPaymentMethod] = useState("stripe");
+  const [paymentMethod, setPaymentMethod] = useState("Card");
   const [paymentEnabled, setPaymentEnabled] = useState(false);
   const [stripeWidgetEnabled, setStripeWidgetEnabled] = useState(false);
   const [data, setData] = useState(null);
@@ -153,15 +153,15 @@ const MainSection = ({ eventId = 1, lang = "de" }) => {
               onChange={(e) => setPaymentMethod(e.target.value)}
               buttonStyle="solid"
             >
-              <Radio.Button value="stripe">{t("stripe")}</Radio.Button>
-              <Radio.Button value="paypal">{t("paypal")}</Radio.Button>
+              <Radio.Button value="Card">{t("Card")}</Radio.Button>
+              <Radio.Button value="PayPal">{t("PayPal")}</Radio.Button>
             </Radio.Group>
           </div>
         )}
 
         {selectedDate &&
           participants > 0 &&
-          paymentMethod === "stripe" &&
+          paymentMethod === "Card" &&
           stripeWidgetEnabled && (
             <div className="payment-section">
               <Row gutter={16}>
@@ -181,7 +181,7 @@ const MainSection = ({ eventId = 1, lang = "de" }) => {
             </div>
           )}
 
-        {selectedDate && participants > 0 && paymentMethod === "paypal" && (
+        {selectedDate && participants > 0 && paymentMethod === "PayPal" && (
           <div className="payment-section">
             <PayPalPayment
               amount={totalAmount}
