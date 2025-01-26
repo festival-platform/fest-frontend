@@ -19,13 +19,6 @@
   font-size: medium;
 }
 
-.ant-picker-dropdown {
-  position: absolute !important;
-  left: 50% !important;
-  top: 50% !important;
-  transform: translate(-50%, 35%) !important;
-}
-
 .label {
   color: white;
   font-size: medium;
