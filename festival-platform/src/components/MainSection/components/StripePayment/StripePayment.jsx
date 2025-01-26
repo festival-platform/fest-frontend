@@ -6,7 +6,7 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import { Button, Input, Row, Col, Alert, notification } from "antd";
+import { Button, Input, Row, Col, Alert, notification, Form } from "antd";
 import { useTranslation } from "react-i18next";
 import config from "../../../../config";
 import "./StripePayment.css";
@@ -21,24 +21,44 @@ const UserInfoForm = ({
 }) => {
   const { t } = useTranslation();
   const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
+  const [form] = Form.useForm();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async () => {
-    setLoading(true);
+  const nameRules = [
+    {
+      required: true,
+      message: t("firstNameRequired"),
+    },
+    {
+      pattern: /^[A-Za-zА-Яа-яЁё\s-]+$/,
+      message: t("nameInvalid"),
+    },
+  ];
+
+  const emailRules = [
+    {
+      required: true,
+      message: t("emailRequired"),
+    },
+    {
+      type: "email",
+      message: t("emailInvalid"),
+    },
+  ];
+
+  const handleSubmit = async (values) => {
     setError(null);
+    setLoading(true);
 
     try {
       const response = await fetch(`${apiBaseUrl}/events/1/book`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          first_name: firstName,
-          last_name: lastName,
-          email,
+          first_name: values.firstName.trim(),
+          last_name: values.lastName.trim(),
+          email: values.email.trim(),
           date: selectedDate,
           quantity: participants,
           payment_provider: "stripe",
@@ -62,44 +82,46 @@ const UserInfoForm = ({
 
   return (
     <div className="user-info-form">
-      <Row gutter={16}>
-        <Col span={12}>
-          <Input
-            placeholder={t("firstNamePlaceholder")}
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
-        </Col>
-        <Col span={12}>
-          <Input
-            placeholder={t("lastNamePlaceholder")}
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-          />
-        </Col>
-      </Row>
-      <Input
-        placeholder={t("emailPlaceholder")}
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        style={{ marginTop: "10px" }}
-      />
-      {error && (
-        <Alert
-          message={error}
-          type="error"
-          showIcon
-          style={{ marginTop: "10px" }}
-        />
-      )}
-      <Button
-        type="primary"
-        onClick={handleSubmit}
-        loading={loading}
-        style={{ marginTop: "10px" }}
+      <Form
+        form={form}
+        layout="vertical"
+        onFinish={handleSubmit}
+        autoComplete="off"
       >
-        {t("continueButton")}
-      </Button>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item name="firstName" rules={nameRules}>
+              <Input placeholder={t("firstNamePlaceholder")} />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item name="lastName" rules={nameRules}>
+              <Input placeholder={t("lastNamePlaceholder")} />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Form.Item name="email" rules={emailRules}>
+          <Input placeholder={t("emailPlaceholder")} />
+        </Form.Item>
+        {error && (
+          <Alert
+            message={error}
+            type="error"
+            showIcon
+            style={{ marginBottom: "10px" }}
+          />
+        )}
+        <Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            loading={loading}
+            style={{ marginTop: "10px" }}
+          >
+            {t("continueButton")}
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   );
 };
@@ -163,7 +185,7 @@ const PaymentForm = ({ userSecret, onPaymentSuccess }) => {
         loading={processing}
         style={{ marginTop: "20px" }}
       >
-        {t("payButton")}
+        {t("payButton")} {/* Например, "Оплатить" */}
       </Button>
     </form>
   );

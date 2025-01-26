@@ -51,6 +51,10 @@ i18n
             "Oktoberfest seats have been successfully booked",
           bookedSuccessInfo:
             "All additional information has already been sent to you by email",
+          firstNameRequired: "Name is a required field",
+          nameInvalid: "The name must contain only letters",
+          emailRequired: "Email is a required field",
+          emailInvalid: "Introduction correct email address",
         },
       },
       de: {
@@ -98,6 +102,10 @@ i18n
           bookedSuccessMessage: "Oktoberfest-Plätze wurden erfolgreich gebucht",
           bookedSuccessInfo:
             "Alle weiteren Informationen wurden Ihnen bereits per E-Mail zugesandt",
+          firstNameRequired: "Name ist ein Pflichtfeld",
+          nameInvalid: "Der Name darf nur Buchstaben enthalten",
+          emailRequired: "E-Mail ist ein Pflichtfeld",
+          emailInvalid: "Einführung korrekte E-Mail-Adresse",
         },
       },
     },
