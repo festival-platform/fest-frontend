@@ -16,6 +16,7 @@ import i18n from "../../i18n";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import config from "../../config";
+import parse from "html-react-parser";
 
 const { Title, Paragraph } = Typography;
 
@@ -107,7 +108,9 @@ const MainSection = ({ eventId = 1, lang = "de" }) => {
         <Title level={3} className="title">
           {t("nameEvent")}
         </Title>
-        <Paragraph className="description">{t("descriptionEvent")}</Paragraph>
+        <Paragraph className="description">
+          {parse(t("descriptionEvent"))}
+        </Paragraph>
 
         <div className="event-info-container">
           <Title level={3}>{t("aboutTheEvent")}</Title>
