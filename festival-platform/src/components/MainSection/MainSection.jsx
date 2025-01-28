@@ -10,6 +10,7 @@ import ReviewForm from "../ReviewForm/ReviewForm";
 import StripePayment from "./components/StripePayment/StripePayment";
 import PayPalPayment from "./components/PayPalPayment/PayPalPayment";
 import ReviewsCarousel from "./components/ReviewsCarousel/ReviewsCarousel";
+import WhatsAppButton from "./components/WhatsAppButton/WhatsAppButton";
 import "./MainSection.css";
 import { useTranslation } from "react-i18next";
 import i18n from "../../i18n";
@@ -205,6 +206,8 @@ const MainSection = ({ eventId = 1, lang = "de" }) => {
           <ReviewForm />
         </div>
       </div>
+
+      <WhatsAppButton />
     </div>
   );
 };
