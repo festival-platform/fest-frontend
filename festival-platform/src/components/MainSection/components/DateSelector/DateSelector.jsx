@@ -10,6 +10,7 @@ const DateSelector = ({
   onDateSelect,
   onCheckAvailability,
   onParticipantsSelect,
+  availableDates,
 }) => {
   const { t } = useTranslation();
   const [enabledDates, setEnabledDates] = useState([]);
@@ -17,27 +18,45 @@ const DateSelector = ({
   const [participants, setParticipants] = useState(1);
 
   useEffect(() => {
-    const loadDates = async () => {
-      try {
-        const dates = await fetchEventDates(1);
-        if (Array.isArray(dates)) {
-          setEnabledDates(dates);
-        } else {
-          console.error("Invalid dates format:", dates);
+    if (
+      availableDates &&
+      Array.isArray(availableDates) &&
+      availableDates.length > 0
+    ) {
+      const datesArr = availableDates.map((item) => item.date);
+      setEnabledDates(datesArr);
+    } else {
+      const loadDates = async () => {
+        try {
+          const event_dates = await fetchEventDates(1);
+          if (Array.isArray(event_dates)) {
+            setEnabledDates(event_dates);
+          } else {
+            console.error("Invalid dates format:", event_dates);
+          }
+        } catch (error) {
+          console.error("Error fetching dates:", error);
+          message.error(t("errorFetchingDates"));
         }
-      } catch (error) {
-        console.error("Error fetching dates:", error);
-        message.error(t("errorFetchingDates"));
-      }
-    };
-
-    loadDates();
-  }, [t]);
+      };
+      loadDates();
+    }
+  }, [availableDates, t]);
 
   const handleDateChange = (date, dateString) => {
-    setSelectedDate(dateString);
-    onDateSelect(dateString);
-    console.log("Selected date:", dateString); // Debugging log
+    const eventDateObj =
+      availableDates && Array.isArray(availableDates)
+        ? availableDates.find((item) => item.date === dateString)
+        : null;
+    if (eventDateObj) {
+      setSelectedDate(eventDateObj.id);
+      onDateSelect(eventDateObj.id);
+      console.log("Selected date id:", eventDateObj.id);
+    } else {
+      setSelectedDate(dateString);
+      onDateSelect(dateString);
+      console.log("Selected date:", dateString);
+    }
   };
 
   const handleParticipantsChange = (value) => {
@@ -46,7 +65,7 @@ const DateSelector = ({
       if (onParticipantsSelect) {
         onParticipantsSelect(value);
       }
-      console.log("Participants updated to:", value); // Debugging log
+      console.log("Participants updated to:", value);
     }
   };
 
@@ -55,7 +74,7 @@ const DateSelector = ({
       message.error(t("pleaseSelectDate"));
     } else {
       onCheckAvailability(selectedDate);
-      console.log("Date availability checked for:", selectedDate); // Debugging log
+      console.log("Date availability checked for:", selectedDate);
     }
   };
 
@@ -99,6 +118,7 @@ const DateSelector = ({
             placeholder={t("selectDate")}
             className="date-picker"
             disabledDate={disabledDate}
+            inputReadOnly
           />
         </div>
         <Button

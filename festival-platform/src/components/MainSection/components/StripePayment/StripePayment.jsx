@@ -59,7 +59,7 @@ const UserInfoForm = ({
           first_name: values.firstName.trim(),
           last_name: values.lastName.trim(),
           email: values.email.trim(),
-          date: selectedDate,
+          event_date_id: selectedDate,
           quantity: participants,
           payment_provider: "stripe",
         }),

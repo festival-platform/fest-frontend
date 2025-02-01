@@ -23,7 +23,7 @@ const PayPalPayment = ({
           first_name: details.payer.name.given_name,
           last_name: details.payer.name.surname,
           email: details.payer.email_address,
-          date: selectedDate,
+          event_date_id: selectedDate,
           quantity: participants,
           payment_provider: "paypal",
         }),
