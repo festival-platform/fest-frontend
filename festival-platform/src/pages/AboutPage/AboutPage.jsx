@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Spin, Alert, Typography, Image } from "antd";
 import { useTranslation } from "react-i18next";
 import "./AboutPage.css";
+import parse from "html-react-parser";
 
 const { Title, Paragraph } = Typography;
 const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
@@ -58,7 +59,7 @@ const AboutPage = () => {
   return (
     <div className="about-page-container">
       <Title level={2}>{aboutInfo[titleKey]}</Title>
-      <Paragraph>{aboutInfo[descriptionKey]}</Paragraph>
+      <Paragraph>{parse(aboutInfo[descriptionKey])}</Paragraph>
       <Image
         src={aboutInfo.images[0]}
         alt="About Image"
