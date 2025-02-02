@@ -10,6 +10,7 @@ import { Button, Input, Row, Col, Alert, notification, Form } from "antd";
 import { useTranslation } from "react-i18next";
 import config from "../../../../config";
 import "./StripePayment.css";
+import Cookies from "js-cookie";
 
 const stripePromise = loadStripe(config.stripePublicKey);
 
@@ -51,10 +52,16 @@ const UserInfoForm = ({
     setError(null);
     setLoading(true);
 
+    const csrfToken = Cookies.get("csrftoken");
+
     try {
       const response = await fetch(`${apiBaseUrl}/events/1/book`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrfToken,
+        },
+        withCredentials: true,
         body: JSON.stringify({
           first_name: values.firstName.trim(),
           last_name: values.lastName.trim(),

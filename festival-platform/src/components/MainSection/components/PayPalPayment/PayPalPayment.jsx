@@ -3,6 +3,7 @@ import { notification } from "antd";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useTranslation } from "react-i18next";
 import config from "../../../../config";
+import Cookies from "js-cookie";
 
 const PayPalPayment = ({
   amount,
@@ -14,11 +15,17 @@ const PayPalPayment = ({
   const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
   const clientId = config.clientId;
 
+  const csrfToken = Cookies.get("csrftoken");
+
   const handlePaymentSuccess = async (details) => {
     try {
       const response = await fetch(`${apiBaseUrl}/events/1/book`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrfToken,
+        },
+        withCredentials: true,
         body: JSON.stringify({
           first_name: details.payer.name.given_name,
           last_name: details.payer.name.surname,
