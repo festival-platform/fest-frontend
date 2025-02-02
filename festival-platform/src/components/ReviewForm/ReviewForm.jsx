@@ -7,6 +7,7 @@ import axios from "axios";
 import "./ReviewForm.css";
 import { useTranslation } from "react-i18next";
 import config from "../../config";
+import Cookies from "js-cookie";
 
 const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
@@ -51,6 +52,8 @@ const ReviewForm = () => {
 
     setIsSubmitting(true);
 
+    const csrfToken = Cookies.get("csrftoken");
+
     const reviewData = {
       author: user.displayName,
       text: review,
@@ -65,7 +68,9 @@ const ReviewForm = () => {
         {
           headers: {
             "Content-Type": "application/json",
+            "X-CSRFToken": csrfToken,
           },
+          withCredentials: true,
         }
       );
 
