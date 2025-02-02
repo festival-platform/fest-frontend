@@ -88,7 +88,7 @@ const SessionBooking = ({ session, price, duration, availableDates }) => {
 
       <Collapse ghost>
         <Panel header={t("about") || "About"} key="1">
-          <p>{sessionDescription}</p>
+          <div dangerouslySetInnerHTML={{ __html: sessionDescription }} />
         </Panel>
       </Collapse>
 
