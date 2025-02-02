@@ -37,18 +37,22 @@ const SessionBooking = ({ session, price, duration, availableDates }) => {
 
   let sessionLabel = "";
   let sessionDescription = "";
+  let sessionDiration = "";
   switch (session) {
     case "morning":
       sessionLabel = t("morningSession") || "Morning";
       sessionDescription = t("morningDescription");
+      sessionDiration = "5";
       break;
     case "afternoon":
       sessionLabel = t("afternoonSession") || "Afternoon";
       sessionDescription = t("afternoonDescription");
+      sessionDiration = "5";
       break;
     case "evening":
       sessionLabel = t("eveningSession") || "Evening";
       sessionDescription = t("eveningDescription");
+      sessionDiration = "7";
       break;
     default:
       sessionLabel = "";
@@ -78,7 +82,7 @@ const SessionBooking = ({ session, price, duration, availableDates }) => {
                   style={{ fontSize: "20px", color: "#fa8c16" }}
                 />
                 <span className="duration-text">
-                  {t("durationEvent")}: {duration} {t("days")}
+                  {t("durationEvent")}: {sessionDiration} {t("hours")}
                 </span>
               </div>
             </Col>
