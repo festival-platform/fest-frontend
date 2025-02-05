@@ -7,9 +7,11 @@ import PayPalPayment from "../PayPalPayment/PayPalPayment";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import config from "../../../../config";
+import "./StempBlock.css";
 import { useTranslation } from "react-i18next";
 
 const { Title } = Typography;
+const { Paragraph } = Typography;
 const { Panel } = Collapse;
 const stripePromise = loadStripe(config.stripePublicKey);
 
@@ -66,7 +68,7 @@ const SessionBooking = ({ session, price, duration, availableDates }) => {
         <Title level={4}>{sessionLabel}</Title>
         <div className="event-info">
           <Row gutter={16}>
-            <Col span={12}>
+            <Col span={14}>
               <div className="price-info">
                 <DollarCircleOutlined
                   style={{ fontSize: "20px", color: "#52c41a" }}
@@ -76,7 +78,7 @@ const SessionBooking = ({ session, price, duration, availableDates }) => {
                 </span>
               </div>
             </Col>
-            <Col span={12}>
+            <Col span={10}>
               <div className="duration-info">
                 <ClockCircleOutlined
                   style={{ fontSize: "20px", color: "#fa8c16" }}
@@ -91,7 +93,12 @@ const SessionBooking = ({ session, price, duration, availableDates }) => {
       </div>
 
       <Collapse ghost>
-        <Panel header={t("about") || "About"} key="1">
+        <Panel
+          header={
+            <div className="clickable-header">{t("about") || "About"}</div>
+          }
+          key="1"
+        >
           <div dangerouslySetInnerHTML={{ __html: sessionDescription }} />
         </Panel>
       </Collapse>
@@ -102,6 +109,8 @@ const SessionBooking = ({ session, price, duration, availableDates }) => {
         onCheckAvailability={handleCheckAvailability}
         availableDates={availableDates}
       />
+
+      <Paragraph>{t("Cancellation")}</Paragraph>
 
       {paymentEnabled && (
         <div className="payment-method">

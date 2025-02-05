@@ -1,0 +1,18 @@
+.clickable-header {
+  width: 95%;
+  cursor: pointer;
+  font-weight: 600;
+  background: transparent;
+  padding: 10px 15px;
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+}
+
+.clickable-header:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.clickable-header:active {
+  background: rgba(0, 0, 0, 0.1);
+  transform: scale(0.98);
+}
