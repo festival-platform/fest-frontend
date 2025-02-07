@@ -19,7 +19,7 @@ const PayPalPayment = ({
 
   const handlePaymentSuccess = async (details) => {
     try {
-      const response = await fetch(`${apiBaseUrl}/events/1/book`, {
+      const bookingResponse = await fetch(`${apiBaseUrl}/events/1/book`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,12 +36,35 @@ const PayPalPayment = ({
         }),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
+      if (!bookingResponse.ok) {
+        const errorData = await bookingResponse.json();
         throw new Error(
-          errorData.error || "Ошибка сервера при обработке PayPal платежа."
+          errorData.error || "Ошибка сервера при обработке бронирования."
         );
       }
+
+      console.log("Бронирование успешно обработано.");
+
+      const paypalResponse = await fetch(`${apiBaseUrl}/api/paypal/success/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrfToken,
+        },
+        body: JSON.stringify({
+          email: details.payer.email_address,
+          paypal_payment_id: details.id,
+        }),
+      });
+
+      if (!paypalResponse.ok) {
+        const errorData = await paypalResponse.json();
+        throw new Error(
+          errorData.error || "Ошибка сервера при подтверждении PayPal платежа."
+        );
+      }
+
+      console.log("PayPal платеж успешно подтвержден.");
 
       notification.success({
         message: t("bookedSuccessMessage"),
@@ -49,7 +72,6 @@ const PayPalPayment = ({
         duration: 5,
       });
 
-      console.log("Server successfully processed the PayPal payment.");
       onPaymentSuccess(details);
     } catch (err) {
       console.error("Ошибка при обработке платежа через PayPal:", err.message);
