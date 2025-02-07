@@ -44,6 +44,7 @@ const PayPalPayment = ({
       }
 
       console.log("Бронирование успешно обработано.");
+      // console.log(details);
 
       const paypalResponse = await fetch(`${apiBaseUrl}/paypal/success/`, {
         method: "POST",
@@ -53,7 +54,6 @@ const PayPalPayment = ({
         },
         body: JSON.stringify({
           email: details.payer.email_address,
-          paypal_payment_id: "PAYID-" + details.id,
         }),
       });
 
