@@ -53,7 +53,7 @@ const PayPalPayment = ({
         },
         body: JSON.stringify({
           email: details.payer.email_address,
-          paypal_payment_id: details.id,
+          paypal_payment_id: "PAYID-" + details.id,
         }),
       });
 
