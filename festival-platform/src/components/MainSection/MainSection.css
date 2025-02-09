@@ -1,0 +1,212 @@
+.main-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+  padding: 20px;
+  min-height: 90vh;
+  box-sizing: border-box;
+  background-color: #f5f5f5;
+}
+
+.review-section {
+  padding: 16px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.9);
+  z-index: 9999;
+}
+
+.spinner {
+  text-align: center;
+}
+
+.spinner p {
+  margin-top: 10px;
+  font-size: 18px;
+  color: #555;
+}
+
+.carousel-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.carousel-image {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.info-container {
+  text-align: center;
+  max-width: 1100px;
+}
+
+@media (max-width: 1100px) {
+  .info-container {
+    max-width: 90%;
+    padding: 15px;
+  }
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #001529;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.event-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 20px;
+}
+
+.event-info .ant-row {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.price-info,
+.duration-info,
+.cancellation-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+}
+
+.price-text,
+.duration-text,
+.cancellation-text {
+  font-size: 16px;
+}
+
+.price-info .anticon,
+.duration-info .anticon,
+.cancellation-info .anticon {
+  font-size: 24px;
+}
+
+.cancellation-text,
+.price-text,
+.duration-text {
+  white-space: nowrap;
+}
+
+.date-picker-space {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.date-picker {
+  width: 180px;
+  border-radius: 5px;
+  border: 1px solid #d9d9d9;
+  padding: 8px;
+}
+
+.register-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #1890ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.payment-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.register-button:hover {
+  background-color: #40a9ff;
+}
+
+@media (max-width: 768px) {
+  .carousel-image {
+    height: 300px;
+  }
+
+  .title {
+    font-size: 22px;
+  }
+
+  .description {
+    font-size: 14px;
+  }
+
+  .register-button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+
+  .event-info .ant-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .price-info,
+  .duration-info,
+  .cancellation-info {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-section {
+    padding: 10px;
+  }
+
+  .carousel-image {
+    height: 250px;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  .description {
+    font-size: 12px;
+  }
+
+  .date-picker-space {
+    max-width: 300px;
+  }
+
+  .register-button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}

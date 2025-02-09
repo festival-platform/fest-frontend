@@ -1,0 +1,22 @@
+.review-form {
+  max-width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rating-stars {
+  font-size: 24px;
+}
+
+.google-login-button {
+  background-color: #4285f4;
+  color: white;
+  border: none;
+}
+
+.google-login-button:hover {
+  background-color: #357ae8;
+  color: white;
+}

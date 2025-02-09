@@ -1,0 +1,106 @@
+.date-selector-container {
+  background-color: #192a56;
+  padding: 10px 100px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+}
+
+.date-selector-container h3 {
+  color: #fff;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 1.25rem;
+}
+
+.check-availability {
+  font-size: medium;
+}
+
+.label {
+  color: white;
+  font-size: medium;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.participant-input {
+  width: 50px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.participants-select {
+  width: 150px;
+}
+
+.date-picker-wrapper .date-picker {
+  border-radius: 50px;
+}
+
+.check-availability {
+  background-color: #487eb0;
+  border: none;
+  padding: 10px 20px;
+  color: #fff;
+  border-radius: 50px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.check-availability:hover {
+  background-color: #40739e;
+}
+
+@media (max-width: 768px) {
+  .date-selector-container {
+    padding: 15px;
+  }
+
+  .date-selector-container h3 {
+    font-size: 1.3rem;
+  }
+
+  .participants-select {
+    width: 120px;
+  }
+
+  .check-availability {
+    padding: 16px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .controls {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .date-selector-container h3 {
+    font-size: 1.2rem;
+  }
+
+  .participants-select {
+    width: 100%;
+  }
+
+  .check-availability {
+    width: 100%;
+    padding: 20px;
+    font-size: 1rem;
+  }
+
+  .date-picker-wrapper .date-picker {
+    width: 180px;
+  }
+}
