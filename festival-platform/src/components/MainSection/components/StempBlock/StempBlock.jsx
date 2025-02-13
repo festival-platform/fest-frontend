@@ -139,7 +139,7 @@ const SessionBooking = ({ session, price, duration, availableDates }) => {
                     selectedDate={selectedDate}
                     participants={participants}
                     onPaymentSuccess={(data) => {
-                      console.log("Payment successful:", data);
+                      //console.log("Payment successful:", data);
                     }}
                   />
                 </Elements>
@@ -155,7 +155,7 @@ const SessionBooking = ({ session, price, duration, availableDates }) => {
             selectedDate={selectedDate}
             participants={participants}
             onPaymentSuccess={(details) => {
-              console.log("PayPal payment successful:", details);
+              //console.log("PayPal payment successful:", details);
             }}
           />
         </div>

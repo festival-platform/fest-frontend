@@ -51,11 +51,11 @@ const DateSelector = ({
     if (eventDateObj) {
       setSelectedDate(eventDateObj.id);
       onDateSelect(eventDateObj.id);
-      console.log("Selected date id:", eventDateObj.id);
+      //console.log("Selected date id:", eventDateObj.id);
     } else {
       setSelectedDate(dateString);
       onDateSelect(dateString);
-      console.log("Selected date:", dateString);
+      //console.log("Selected date:", dateString);
     }
   };
 
@@ -65,7 +65,7 @@ const DateSelector = ({
       if (onParticipantsSelect) {
         onParticipantsSelect(value);
       }
-      console.log("Participants updated to:", value);
+      //console.log("Participants updated to:", value);
     }
   };
 
@@ -74,7 +74,7 @@ const DateSelector = ({
       message.error(t("pleaseSelectDate"));
     } else {
       onCheckAvailability(selectedDate);
-      console.log("Date availability checked for:", selectedDate);
+      //console.log("Date availability checked for:", selectedDate);
     }
   };
 

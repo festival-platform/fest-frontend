@@ -43,7 +43,7 @@ const PayPalPayment = ({
         );
       }
 
-      console.log("Бронирование успешно обработано.");
+      // console.log("Бронирование успешно обработано.");
       // console.log(details);
 
       const paypalResponse = await fetch(`${apiBaseUrl}/paypal/success/`, {
@@ -64,7 +64,7 @@ const PayPalPayment = ({
         );
       }
 
-      console.log("PayPal платеж успешно подтвержден.");
+      //console.log("PayPal платеж успешно подтвержден.");
 
       notification.success({
         message: t("bookedSuccessMessage"),

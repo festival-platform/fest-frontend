@@ -22,7 +22,7 @@ const ReviewsCarousel = ({ eventId }) => {
     const fetchReviews = async () => {
       try {
         const response = await axios.get(`${apiBaseUrl}/events/1/reviews`);
-        console.log("Полученные отзывы:", response.data);
+        //("Полученные отзывы:", response.data);
 
         if (Array.isArray(response.data)) {
           setReviews(response.data);
